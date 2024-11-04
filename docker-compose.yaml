@@ -1,0 +1,58 @@
+services:
+#  app1:
+#    build:
+#      context:  observability
+#    container_name: app1
+#    ports:
+#      - 8080:8080
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    network_mode: host
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  # LOGS
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    network_mode: host
+    depends_on:
+      - prometheus
+
+  # Traces
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin-slim
+    network_mode: host
+    ports:
+      - 9411:9411
+    depends_on:
+      - prometheus
+
+#  collector:
+#    container_name: open_telemetry
+#    image: otel/opentelemetry-collector:latest
+#    command: [ "--config=/etc/otel-collector-config.yml" ]
+#    network_mode: host
+#    volumes:
+#      - ./otel/otel-config.yml:/etc/otel-collector-config.yml
+#    ports:
+#      - "4317:4317"
+#    depends_on:
+#      - prometheus
+#      - loki
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    network_mode: host
+    ports:
+      - 3000:3000

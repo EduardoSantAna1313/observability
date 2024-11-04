@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: observability
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+
+#logging:
+#  level:
+#    root: info
+#  pattern:
+#    console: "[%d{yyyy-MM-dd HH:mm:ss}] | %-5level | %logger{1.} | %msg%n"
+
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411/api/v2/spans
+
+#  otlp:
+#    metrics:
+#      export:
+#        url: http://localhost:9090/api/v1/otlp/v1/metrics
+
+  # actuator
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+pokeapi:
+  url: https://pokeapi.co/api/v2
+

@@ -1,0 +1,11 @@
+receivers:
+  exporters:
+    zipkin:
+      endpoint: "http://localhost:9411"
+      tls:
+        insecure: true
+
+service:
+  pipelines:
+    traces:
+      exporters: [zipkin]
