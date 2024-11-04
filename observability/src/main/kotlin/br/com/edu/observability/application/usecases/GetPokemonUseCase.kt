@@ -17,7 +17,7 @@ class GetPokemonUseCase(
 
     private val logger = Logger.logger(GetPokemonUseCase::class.java)
 
-    fun get(name: String): Either<BusinessError, Pokemon> {
+    fun execute(name: String): Either<BusinessError, Pokemon> {
 
         logger.info("Buscando o pokemon $name no DB.")
 

@@ -30,5 +30,27 @@ class PokeDeskControllerTest {
             .andExpect(jsonPath("$.height").value(6))
     }
 
+    @Test
+    @DisplayName("Should return a NotFound")
+    fun `should return a NotFound`() {
+        mvc.perform(get("/v1/pokemon/charmander2")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("$.message").hasJsonPath())
+    }
+
+    @Test
+    @DisplayName("Should list pokemon")
+    fun `should list all pokemon`() {
+        mvc.perform(get("/v1/pokemon/charmander")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+
+
+        mvc.perform(get("/v1/pokemon")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+    }
+
 
 }

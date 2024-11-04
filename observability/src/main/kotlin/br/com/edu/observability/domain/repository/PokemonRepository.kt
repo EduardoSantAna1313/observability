@@ -8,4 +8,6 @@ interface PokemonRepository {
 
     fun getByName(name: String): Pokemon?
 
+    fun findAll(): List<Pokemon>
+
 }
