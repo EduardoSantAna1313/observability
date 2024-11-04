@@ -65,7 +65,6 @@
 		</dependency>
 
 		<!-- For Metrics -->
-		<!-- For OTLP -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-otlp</artifactId>
