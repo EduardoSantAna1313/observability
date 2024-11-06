@@ -4,6 +4,8 @@ services:
     container_name: prometheus
     image: prom/prometheus
     network_mode: host
+    #networks:
+    #  - backend
     ports:
       - 9090:9090
     volumes:
@@ -18,6 +20,8 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     network_mode: host
+    #networks:
+    #  - backend
     depends_on:
       - prometheus
 
@@ -26,6 +30,8 @@ services:
     container_name: zipkin
     image: openzipkin/zipkin-slim
     network_mode: host
+    #networks:
+    #  - backend
     ports:
       - 9411:9411
     depends_on:
@@ -36,6 +42,8 @@ services:
     image: otel/opentelemetry-collector-contrib
     command: [ "--config=/etc/otel-collector-config.yml" ]
     network_mode: host
+    #networks:
+    #  - backend
     volumes:
       - ./otel/otel-config.yml:/etc/otel-collector-config.yml
     ports:
@@ -54,21 +62,33 @@ services:
     container_name: grafana
     image: grafana/grafana
     network_mode: host
+    #networks:
+    #  - backend
     ports:
       - 3000:3000
 
   app:
     build:
-      context:  observability
+      context:  app
     container_name: app
     network_mode: host
+    #networks:
+    #  - backend
     ports:
       - 8080:8080
     environment:
       OTEL_TRACES_EXPORTER: zipkin
-      OTEL_SERVICE_NAME: observability
+      OTEL_SERVICE_NAME: app-spring
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/opentelemetry-javaagent.jar"
       OTEL_JAVAAGENT_LOGGING: application
       OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4318
-      OTLP_ENDPOINT: http://localhost:4318
+      MANAGEMENT_ZIPKIN_ENABLED: true
+      MANAGEMENT_ZIPKIN_BASE_URL: http://localhost:9411/api/v2/spans
+      LOKI_BASE_URL: http://localhost:3100/loki/api/v1/push
     depends_on:
       - collector
+
+networks:
+  backend:
+    driver: bridge
+

@@ -27,13 +27,8 @@ management:
     sampling:
       probability: 1.0
   zipkin:
-    enabled: true
-    base-url: http://localhost:9411/api/v2/spans
-
-#  otlp:
-#    metrics:
-#      export:
-#        url: http://localhost:9090/api/v1/otlp/v1/metrics
+    enabled: ${MANAGEMENT_ZIPKIN_ENABLED:false}
+    base-url: ${MANAGEMENT_ZIPKIN_BASE_URL:http://zipkin:9411/api/v2/spans}
 
   # actuator
   endpoints:

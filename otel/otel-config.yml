@@ -22,7 +22,7 @@ receivers:
   otlp:
     protocols:
       http:
-        endpoint: "0.0.0.0:4318"
+        endpoint: "localhost:4318"
 
 exporters:
   prometheusremotewrite:
@@ -33,12 +33,36 @@ exporters:
   zipkin:
     endpoint: http://zipkin:9411/api/v2/spans
 
+  loki:
+    endpoint: http://localhost:3100/loki/api/v1/push
+    tls:
+      insecure: true
+
+processors:
+  attributes:
+    actions:
+      - action: insert
+        key: loki.format
+        value: raw
+
+  resource:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: app
+      - action: insert
+        key: app
+        value: app-spring
+
 service:
   pipelines:
     metrics:
-      receivers: [hostmetrics, prometheus]
+      receivers: [otlp, hostmetrics, prometheus]
       exporters: [prometheusremotewrite]
-
     traces:
       receivers: [otlp]
       exporters: [zipkin]
+    logs:
+      receivers: [otlp]
+      processors: [attributes, resource]
+      exporters: [loki]
