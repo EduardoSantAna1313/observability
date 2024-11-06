@@ -7,6 +7,7 @@ import br.com.edu.observability.domain.errors.BusinessError
 import br.com.edu.observability.domain.model.Pokemon
 import br.com.edu.observability.domain.repository.PokemonRepository
 import br.com.edu.observability.infra.gateway.PokemonGateway
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,6 +18,7 @@ class GetPokemonUseCase(
 
     private val logger = Logger.logger(GetPokemonUseCase::class.java)
 
+    @Transactional
     fun execute(name: String): Either<BusinessError, Pokemon> {
 
         logger.info("Buscando o pokemon $name no DB.")

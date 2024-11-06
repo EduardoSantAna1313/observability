@@ -62,35 +62,6 @@
 			<version>1.2.4</version>
 		</dependency>
 
-		<!-- For Metrics -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-otlp</artifactId>
-		</dependency>
-		<!-- Tracing -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
-		</dependency>
-		<!-- For Latency Visualization -->
-		<dependency>
-			<groupId>io.zipkin.contrib.otel</groupId>
-			<artifactId>encoder-brave</artifactId>
-			<version>0.1.0</version>
-		</dependency>
-
-		<!-- For pushing logs out -->
-		<dependency>
-			<groupId>com.github.loki4j</groupId>
-			<artifactId>loki-logback-appender</artifactId>
-			<version>1.5.2</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.5.12</version>
-		</dependency>
-
 		<!-- Tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

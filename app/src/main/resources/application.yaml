@@ -15,11 +15,11 @@ spring:
     username: sa
     password: password
 
-#logging:
-#  level:
-#    root: info
-#  pattern:
-#    console: "[%d{yyyy-MM-dd HH:mm:ss}] | %-5level | %logger{1.} | %msg%n"
+logging:
+  level:
+    root: info
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss}] | %-5level | %logger{1.} | %msg%n"
 
 management:
   tracing:
