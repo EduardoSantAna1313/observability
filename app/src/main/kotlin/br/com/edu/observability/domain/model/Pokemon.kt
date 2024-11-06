@@ -21,17 +21,3 @@ class Pokemon(
     @ManyToMany(cascade = [CascadeType.ALL])
     val abilities: List<Ability>
 )
-
-@Entity
-@Table(name= "PokemonType")
-class Type(
-    @Id
-    val name: String
-)
-
-@Entity
-@Table(name= "PokemonAbility")
-class Ability(
-    @Id
-    val name: String
-)

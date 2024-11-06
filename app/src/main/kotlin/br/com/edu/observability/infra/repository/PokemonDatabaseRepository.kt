@@ -6,7 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PokemonDatabaseRepository: PokemonRepository, JpaRepository<Pokemon, String> {
-
-    override fun save(pokemon: Pokemon)
-}
+interface PokemonDatabaseRepository: PokemonRepository, JpaRepository<Pokemon, String>

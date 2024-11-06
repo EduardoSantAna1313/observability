@@ -1,17 +1,6 @@
-# FROM maven:3.9.6 AS builder
-#
-# WORKDIR /app/
-#
-# COPY src /app/
-# COPY pom.xml /app/
-#
-# CMD ["mvn", "clean", "install", "-DskipTests"]
-
 FROM amazoncorretto:21
 
 WORKDIR /app/
-
-# COPY --from=builder /app/target/*.jar app.jar
 
 RUN yum install -y wget git curl
 

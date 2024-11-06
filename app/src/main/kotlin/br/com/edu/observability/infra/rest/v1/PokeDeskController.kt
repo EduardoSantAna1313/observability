@@ -4,6 +4,7 @@ import arrow.core.getOrElse
 import br.com.edu.observability.application.usecases.GetPokemonUseCase
 import br.com.edu.observability.application.usecases.ListPokemonUseCase
 import br.com.edu.observability.domain.errors.BusinessError
+import br.com.edu.observability.infra.rest.v1.responses.Problem
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -37,10 +38,6 @@ fun handleErrorResponse(error: BusinessError): ResponseEntity<*> {
         BusinessError.UnexpectedError -> 500
         BusinessError.NotFoundError -> 404
     }
-    return ResponseEntity.status(status).body(Problem(error.message))
+    return ResponseEntity.status(status).body(Problem(error.message, status))
 
 }
-
-data class Problem(
-    val message: String
-)

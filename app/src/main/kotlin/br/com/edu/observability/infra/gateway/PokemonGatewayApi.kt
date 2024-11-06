@@ -3,6 +3,7 @@ package br.com.edu.observability.infra.gateway
 import arrow.core.Either
 import br.com.edu.observability.domain.Logger
 import br.com.edu.observability.domain.errors.BusinessError
+import br.com.edu.observability.domain.gateway.PokemonGateway
 import br.com.edu.observability.domain.model.Ability
 import br.com.edu.observability.domain.model.Pokemon
 import br.com.edu.observability.domain.model.Type
@@ -17,16 +18,16 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 @Component
-class PokemonGateway(
+class PokemonGatewayApi(
     private val mapper: ObjectMapper
-) {
+): PokemonGateway {
 
-    private val logger: org.slf4j.Logger = Logger.logger(PokemonGateway::class.java)
+    private val logger: org.slf4j.Logger = Logger.logger(PokemonGatewayApi::class.java)
 
     @Value("\${pokeapi.url}")
     lateinit var url: String
 
-    fun get(name: String): Either<BusinessError, Pokemon> {
+    override fun get(name: String): Either<BusinessError, Pokemon> {
 
         val request = HttpRequest.newBuilder(URI(("$url/pokemon/$name")))
             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
@@ -41,14 +42,6 @@ class PokemonGateway(
         if (response.statusCode() != 200) return Either.Left(BusinessError.UnexpectedError)
 
         val json = response.body()
-
-        logger.debug("""
-            Response
-            body: $json
-            Status: ${response.statusCode()}
-            
-            Request: ${request.uri()}
-        """.trimIndent())
 
         val tree = mapper.readTree(json)
 

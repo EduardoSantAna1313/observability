@@ -4,7 +4,7 @@ sealed class BusinessError(
     val message: String
 ) {
 
-    data object UnexpectedError: BusinessError("Um erro inesperado ocorreu")
-    data object NotFoundError: BusinessError("Não encontrado")
+    data object UnexpectedError: BusinessError("Um erro inesperado ocorreu.")
+    data object NotFoundError: BusinessError("Pokemon não encontrado.")
 
 }

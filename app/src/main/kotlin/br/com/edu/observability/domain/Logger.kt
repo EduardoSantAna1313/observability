@@ -4,6 +4,6 @@ import org.slf4j.LoggerFactory
 
 object Logger {
 
-    fun logger(clazz: Class<*>) = LoggerFactory.getLogger(clazz)
+    fun logger(clazz: Class<*>): org. slf4j. Logger = LoggerFactory.getLogger(clazz)
 
 }

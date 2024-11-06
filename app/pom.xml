@@ -10,8 +10,8 @@
 	</parent>
 
 	<groupId>br.com.edu</groupId>
-	<artifactId>observability</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>app-spring</artifactId>
+	<version>1.0.0</version>
 	<name>observability</name>
 	<description>Demo project for Spring Boot</description>
 

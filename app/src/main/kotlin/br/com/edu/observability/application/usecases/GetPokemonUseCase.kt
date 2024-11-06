@@ -4,9 +4,9 @@ import arrow.core.Either
 import arrow.core.getOrElse
 import br.com.edu.observability.domain.Logger
 import br.com.edu.observability.domain.errors.BusinessError
+import br.com.edu.observability.domain.gateway.PokemonGateway
 import br.com.edu.observability.domain.model.Pokemon
 import br.com.edu.observability.domain.repository.PokemonRepository
-import br.com.edu.observability.infra.gateway.PokemonGateway
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
