@@ -1,0 +1,28 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: app-admin-server
+  security:
+    user:
+      name: ${SBA_SERVER_USERNAME:server}
+      password: ${SBA_SERVER_PASSWORD:server}
+  boot:
+    admin:
+      client:
+        username: ${SBA_SERVER_USERNAME:server}
+        password: ${SBA_SERVER_PASSWORD:server}
+        instance:
+          metadata:
+            user:
+              name: ${SBA_CLIENT_USERNAME:client}
+              password: ${SBA_CLIENT_PASSWORD:client}
+
+logging:
+  level:
+    root: info
+    web: info
+    org.springframework: info
+  charset:
+    file: utf-8

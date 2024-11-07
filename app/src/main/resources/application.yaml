@@ -1,6 +1,11 @@
 server:
   port: 8080
 
+info:
+  name: Spring Boot Admin Client
+  description: Sistema Cliente
+  version: @project.version@
+
 spring:
   application:
     name: observability
@@ -15,6 +20,25 @@ spring:
     username: sa
     password: password
 
+  security:
+    user:
+      name: ${SBA_CLIENT_USERNAME:client}
+      password: ${SBA_CLIENT_PASSWORD:client}
+  boot:
+    admin:
+      client:
+        enabled: true
+        url: http://localhost:8081
+        username: ${SBA_SERVER_USERNAME:server}
+        password: ${SBA_SERVER_PASSWORD:server}
+        instance:
+          service-base-url: http://localhost:8080
+          metadata:
+            user:
+              name: ${SBA_SERVER_USERNAME:server}
+              password: ${SBA_SERVER_PASSWORD:server}
+        auto-deregistration: true
+
 logging:
   level:
     root: info
@@ -22,15 +46,6 @@ logging:
     console: "[%d{yyyy-MM-dd HH:mm:ss}] | %-5level | %logger{1.} | %msg%n"
 
 management:
-  tracing:
-    enabled: true
-    sampling:
-      probability: 1.0
-  zipkin:
-    enabled: ${MANAGEMENT_ZIPKIN_ENABLED:false}
-    base-url: ${MANAGEMENT_ZIPKIN_BASE_URL:http://zipkin:9411/api/v2/spans}
-
-  # actuator
   endpoints:
     web:
       exposure:

@@ -57,6 +57,19 @@ services:
     ports:
       - 3000:3000
 
+  admin-server:
+    build:
+      context:  app-admin-server
+    container_name: admin-server
+    network_mode: host
+    ports:
+      - 8081:8081
+    deploy:
+      resources:
+        limits:
+          cpus: '0.500'
+          memory: 512M
+
   app:
     build:
       context:  app
@@ -67,7 +80,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.500'
+          cpus: '1.0'
           memory: 512M
     environment:
       OTEL_TRACES_EXPORTER: zipkin
@@ -79,6 +92,7 @@ services:
       MANAGEMENT_ZIPKIN_BASE_URL: http://localhost:9411/api/v2/spans
       LOKI_BASE_URL: http://localhost:3100/loki/api/v1/push
     depends_on:
+      - admin-server
       - collector
 
 networks:

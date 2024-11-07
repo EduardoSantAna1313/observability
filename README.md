@@ -17,3 +17,7 @@ observability
 ### Database H2
 
 [H2](http://localhost:8080/h2-console)
+
+### Admin Server
+
+[AdminServer](http://localhost:8081)
