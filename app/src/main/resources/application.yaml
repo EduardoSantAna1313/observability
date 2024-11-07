@@ -2,23 +2,23 @@ server:
   port: 8080
 
 info:
-  name: Spring Boot Admin Client
-  description: Sistema Cliente
+  name: App Spring
+  description: App for Observability
   version: @project.version@
 
 spring:
   application:
     name: observability
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
 
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+    url: ${DB_HOST:jdbc:postgresql://localhost:5432/observability}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres066252}
 
   security:
     user:

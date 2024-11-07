@@ -69,6 +69,23 @@ services:
         limits:
           cpus: '0.500'
           memory: 512M
+    healthcheck:
+      test: curl --fail http://localhost:8081/actuator/health || exit 1
+      interval: 40s
+      timeout: 30s
+      retries: 3
+      start_period: 60s
+
+  db:
+    image: postgres:latest
+    container_name: postgresdb
+    ports:
+      - 5432:5432
+    network_mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres066252
+      POSTGRES_DB: observability
 
   app:
     build:
@@ -80,9 +97,12 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: '0.5'
           memory: 512M
     environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres066252
+      DB_HOST: jdbc:postgresql://localhost:5432/observability
       OTEL_TRACES_EXPORTER: zipkin
       OTEL_SERVICE_NAME: app-spring
       JAVA_TOOL_OPTIONS: "-javaagent:/app/opentelemetry-javaagent.jar"
@@ -94,6 +114,7 @@ services:
     depends_on:
       - admin-server
       - collector
+      - db
 
 networks:
   backend:

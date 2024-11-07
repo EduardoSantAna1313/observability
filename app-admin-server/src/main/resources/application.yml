@@ -18,6 +18,14 @@ spring:
             user:
               name: ${SBA_CLIENT_USERNAME:client}
               password: ${SBA_CLIENT_PASSWORD:client}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:
